@@ -16,13 +16,13 @@ jobs:
     - name: Install SSH Key
       run: |
         mkdir -p ~/.ssh
-        echo "${{ secrets.AWS_SSH_KEY }}" > ~/.ssh/id_rsa
-        chmod 600 ~/.ssh/id_rsa
+        echo "${{ secrets.AWS_SSH_KEY }}" > ~/.ssh/github_deploy_key
+        chmod 600 ~/.ssh/github_deploy_key
         ssh-keyscan -H your-instance-ip >> ~/.ssh/known_hosts
 
     - name: Deploy to AWS
       run: |
-        ssh -i ~/.ssh/id_rsa ubuntu@your-instance-ip << 'EOF'
+        ssh -i ~/.ssh/github_deploy_key ubuntu@13.203.121.231 << 'EOF'
         cd /var/www/html/react-app
         git pull origin main
         npm install
