@@ -19,6 +19,12 @@ jobs:
         echo "${{ secrets.AWS_SSH_KEY }}" > ~/.ssh/github_deploy_key
         chmod 600 ~/.ssh/github_deploy_key
         ssh-keyscan -H 13.203.121.231 >> ~/.ssh/known_hosts
+        
+    - name: Add SSH Key to Agent
+      run: |
+       eval $(ssh-agent -s)
+       ssh-add ~/.ssh/github_deploy_key
+
 
     - name: Deploy to AWS
       run: |
